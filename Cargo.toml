@@ -1,0 +1,44 @@
+[package]
+name = "tyupy"
+version = "0.1.0"
+authors = ["azzamsa <vcs@azzamsa.com>"]
+categories = ["command-line-utilities"]
+edition = "2021"
+exclude = ["/README.md"]
+keywords = ["cli", "formatter"]
+license = "MIT"
+repository = "https://github.com/azzamsa/tyupy"
+rust-version = "1.73.0"
+description = "Turn URL into any format"
+
+[profile.release]
+opt-level = 'z' # Optimize for size.
+codegen-units = 1
+lto = true
+panic = 'abort'
+
+[dependencies]
+# cli
+clap = { version = "4.1.8", features = ["suggestions", "color", "cargo", "derive"] }
+owo-colors = { version = "3.5.0", features = ["supports-colors"] }
+
+# error
+miette = { version = "5.5", features = ["fancy"] }
+thiserror = "1.0"
+
+[dev-dependencies]
+assert_cmd = "2.0"
+assert_fs = "1.0"
+predicates = "2.1"
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ version}-{ target }.tar.gz"
+bin-dir = "{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+[package.metadata.release]
+sign-commit = true
+sign-tag = true
+tag-message = "v{{version}}"
+pre-release-commit-message = "v{{version}}"
+pre-release-hook = ["just", "_release-prepare", "{{version}}"]

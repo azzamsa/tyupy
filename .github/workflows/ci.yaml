@@ -1,0 +1,108 @@
+name: CI
+
+env:
+  MIN_SUPPORTED_RUST_VERSION: "1.70.0"
+
+on: [push, pull_request]
+
+jobs:
+  code_quality:
+    name: Code Quality
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Install rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install latest just release
+        uses: taiki-e/install-action@just
+
+      - name: Install latest dprint release
+        uses: taiki-e/install-action@dprint
+
+      - name: Ensure `fmt` has been run
+        run:  just fmt-check
+
+      - name: Ensure MSRV is set in `clippy.toml`
+        run: grep "^msrv = \"${{ env.MIN_SUPPORTED_RUST_VERSION }}\"\$" clippy.toml
+
+      - name: Run clippy
+        run: just lint
+
+  msrv:
+    name: Minimum Supported Rust Version
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Install rust toolchain (v${{ env.MIN_SUPPORTED_RUST_VERSION }})
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ env.MIN_SUPPORTED_RUST_VERSION }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install latest just release
+        uses: taiki-e/install-action@just
+
+      - uses: taiki-e/install-action@nextest
+
+      - name: Run tests
+        run: just test
+
+  build:
+    name: Build for ${{ matrix.build }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { build: linux-gnu,  os: ubuntu-22.04, target: x86_64-unknown-linux-gnu    }
+          - { build: linux-musl, os: ubuntu-22.04, target: x86_64-unknown-linux-musl   }
+          - { build: win-gnu,    os: windows-2022, target: x86_64-pc-windows-gnu       }
+          - { build: win-msvc,   os: windows-2022, target: x86_64-pc-windows-msvc      }
+          - { build: win32-msvc, os: windows-2022, target: i686-pc-windows-msvc        }
+          - { build: macos,      os: macos-12    , target: x86_64-apple-darwin         }
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          target: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Show version information
+        shell: bash
+        run: |
+          gcc --version || true
+          rustup -V
+          rustup toolchain list
+          rustup default
+          cargo -V
+          rustc -V
+
+      - name: Install musl-tools
+        if: matrix.target == 'x86_64-unknown-linux-musl'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            --allow-unauthenticated musl-tools
+
+      - name: Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.os }}-${{ matrix.target }}
+
+      - name: Build
+        run: cargo build --release --locked --target ${{ matrix.target }}
