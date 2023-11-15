@@ -7,6 +7,7 @@ pub mod config;
 pub mod error;
 pub mod exit_codes;
 pub mod fmt;
+pub mod web;
 
 // Aliases
 pub use error::Error;

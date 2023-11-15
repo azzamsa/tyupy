@@ -4,7 +4,12 @@ use std::process;
 use clap::Parser;
 use miette::Result;
 
-use tyupy::{cli::Opts, config::Config, exit_codes::ExitCode, out::stderr};
+use tyupy::{
+    cli::{Format, Opts},
+    config::Config,
+    exit_codes::ExitCode,
+    fmt, out, web,
+};
 
 fn main() {
     let result = run();
@@ -13,7 +18,7 @@ fn main() {
             process::exit(exit_code.into());
         }
         Err(err) => {
-            stderr(&format!("Error: {:?}", err));
+            out::stderr(&format!("Error: {:?}", err));
             process::exit(ExitCode::GeneralError.into());
         }
     }
@@ -21,7 +26,17 @@ fn main() {
 
 fn run() -> Result<ExitCode> {
     let opts = Opts::parse();
-    let _config = construct_config(opts);
+
+    let url = &opts.url.clone();
+    let config = construct_config(opts);
+
+    let title = web::title(url)?;
+    let link = match config.format {
+        Format::Markdown => fmt::markdown(url, &title),
+        Format::Org => fmt::org(url, &title),
+    };
+    out::stdout(&link);
+
     Ok(ExitCode::Success)
 }
 

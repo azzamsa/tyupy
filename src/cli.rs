@@ -12,11 +12,16 @@ pub struct Opts {
     pub url: String,
 
     /// Output format
-    #[arg(short, long, value_enum)]
+    #[arg(short, long, value_enum, default_value_t = Format::Markdown)]
     pub format: Format,
 }
 
 #[derive(Debug, Clone, ValueEnum)]
 pub enum Format {
+    /// Markdown format
+    #[value(alias = "m")]
     Markdown,
+    /// Org format
+    #[value(alias = "o")]
+    Org,
 }

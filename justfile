@@ -19,7 +19,7 @@ check: fmt-check lint test
 
 # Develop the app.
 dev:
-    bacon
+    bacon clippy
 
 # Format the codebase.
 fmt:
