@@ -9,7 +9,7 @@ use clap::{Parser, ValueEnum};
 )]
 pub struct Opts {
     /// The URL to be formatted
-    pub url: String,
+    pub url: Option<String>,
 
     /// Output format
     #[arg(short, long, value_enum, default_value_t = Format::Markdown)]

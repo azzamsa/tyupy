@@ -1,15 +1,12 @@
 #![deny(unsafe_code)]
+use std::io;
+use std::io::BufRead;
 use std::process;
 
 use clap::Parser;
 use miette::Result;
 
-use tyupy::{
-    cli::{Format, Opts},
-    config::Config,
-    exit_codes::ExitCode,
-    fmt, out, web,
-};
+use tyupy::{cli::Opts, config::Config, exit_codes::ExitCode, output};
 
 fn main() {
     let result = run();
@@ -18,7 +15,7 @@ fn main() {
             process::exit(exit_code.into());
         }
         Err(err) => {
-            out::stderr(&format!("Error: {:?}", err));
+            output::stderr(&format!("Error: {:?}", err));
             process::exit(ExitCode::GeneralError.into());
         }
     }
@@ -26,22 +23,20 @@ fn main() {
 
 fn run() -> Result<ExitCode> {
     let opts = Opts::parse();
-
-    let url = &opts.url.clone();
-    let config = construct_config(opts);
-
-    let title = web::title(url)?;
-    let link = match config.format {
-        Format::Markdown => fmt::markdown(url, &title),
-        Format::Org => fmt::org(url, &title),
+    let config = Config {
+        format: opts.format,
     };
-    out::stdout(&link);
+
+    let printer = output::Printer::new(config);
+    match opts.url.clone() {
+        Some(url) => printer.print(&url)?,
+        None => {
+            for line in io::stdin().lock().lines() {
+                let url = line.unwrap_or("".to_string());
+                printer.print(&url)?
+            }
+        }
+    };
 
     Ok(ExitCode::Success)
-}
-
-fn construct_config(opts: Opts) -> Config {
-    Config {
-        format: opts.format,
-    }
 }
