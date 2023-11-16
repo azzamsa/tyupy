@@ -13,3 +13,9 @@ impl std::convert::From<std::io::Error> for Error {
         Error::Internal(err.to_string())
     }
 }
+
+impl std::convert::From<reqwest::Error> for Error {
+    fn from(err: reqwest::Error) -> Self {
+        Error::Internal(err.to_string())
+    }
+}

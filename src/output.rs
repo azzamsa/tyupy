@@ -10,11 +10,11 @@ impl Printer {
     pub fn new(config: Config) -> Self {
         Self { config }
     }
-    pub fn print(&self, url: &str) -> Result<(), crate::Error> {
-        self.link(url)
+    pub async fn print(&self, url: &str) -> Result<(), crate::Error> {
+        self.link(url).await
     }
-    fn link(&self, url: &str) -> Result<(), crate::Error> {
-        let title = web::title(url)?;
+    async fn link(&self, url: &str) -> Result<(), crate::Error> {
+        let title = web::title(url).await?;
         let link = match self.config.format {
             Format::Markdown => fmt::markdown(url, &title),
             Format::Org => fmt::org(url, &title),
