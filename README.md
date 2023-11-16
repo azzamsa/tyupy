@@ -3,7 +3,7 @@
 
 <img src='docs/logo.svg' width=80px />
 
-Turn URL to any format.
+Transform URLs into any format.
 
 <a href="https://github.com/azzamsa/tyupy/actions/workflows/ci.yml">
     <img src="https://github.com/azzamsa/tyupy/actions/workflows/ci.yml/badge.svg" alt="Build status" />
@@ -29,9 +29,31 @@ Turn URL to any format.
 
 ## Features
 
+- Format given link(s) to any format*
+- Fancy error message and colorful output.
+- Cross-platform and single binary.
+
+*Please open a PR if your favorite format doesn't exist
+
 ## Usage
 
-## Integration with other tool
+``` bash
+🦄 tyupy --help
+
+🦄 tyupy https://github.com/azzamsa/tin/
+[GitHub - azzamsa/tin: Rust GraphQL Template 🏗](https://github.com/azzamsa/tin/)
+
+🦄 tyupy https://github.com/azzamsa/tin/ --format org # use `-f o` alias for less typing
+[[https://github.com/azzamsa/tin/][GitHub - azzamsa/tin: Rust GraphQL Template 🏗]]
+
+🦄 tyupy # reads from stdin
+https://github.com/azzamsa/zman
+[GitHub - azzamsa/zman: A time progress bar utilities](https://github.com/azzamsa/zman)
+https://github.com/azzamsa/tin/
+https://github.com/azzamsa/tun
+[GitHub - azzamsa/tin: Rust GraphQL Template 🏗](https://github.com/azzamsa/tin/)
+[GitHub - azzamsa/tun: Rust REST API Boilerplate 🏗](https://github.com/azzamsa/tun)
+```
 
 ## Installation
 
