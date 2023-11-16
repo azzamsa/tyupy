@@ -37,7 +37,7 @@ Transform URLs into any format.
 
 ## Usage
 
-``` bash
+```bash
 🦄 tyupy --help
 
 🦄 tyupy https://github.com/azzamsa/tin/

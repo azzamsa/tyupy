@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2023-11-16
+
+### Bug fixes
+
+- `writeln` doesn't work well with `stdin().lock()` ([31af6d6](https://github.com/azzamsa/tyupy/commit/31af6d65e04c892db136bd99648a4fcc537c89c9))
+
 ## [0.1.1] - 2023-11-16
 
 ### Features
