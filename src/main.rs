@@ -4,9 +4,13 @@ use std::io::BufRead;
 use std::process;
 
 use clap::Parser;
-use miette::Result;
 
-use tyupy::{cli::Opts, config::Config, exit_codes::ExitCode, output};
+use tyupy::{
+    cli::{self, Opts},
+    config::Config,
+    exit_codes::ExitCode,
+    output,
+};
 
 #[tokio::main]
 async fn main() {
@@ -22,7 +26,7 @@ async fn main() {
     }
 }
 
-async fn run() -> Result<ExitCode> {
+async fn run() -> miette::Result<ExitCode> {
     let opts = Opts::parse();
     let config = Config {
         format: opts.format,
@@ -33,7 +37,8 @@ async fn run() -> Result<ExitCode> {
         Some(url) => printer.print(&url).await?,
         None => {
             for line in io::stdin().lock().lines() {
-                let url = line.unwrap_or("".to_string());
+                let line = &line.unwrap_or("".to_string());
+                let url = cli::parse_url(line)?;
                 printer.print(&url).await?
             }
         }

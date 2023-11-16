@@ -1,4 +1,6 @@
 use clap::{Parser, ValueEnum};
+use miette::IntoDiagnostic;
+use url::Url;
 
 #[derive(Parser)]
 #[command(
@@ -9,7 +11,8 @@ use clap::{Parser, ValueEnum};
 )]
 pub struct Opts {
     /// The URL to be formatted
-    pub url: Option<String>,
+    #[arg(value_parser = parse_url)]
+    pub url: Option<Url>,
 
     /// Output format
     #[arg(short, long, value_enum, default_value_t = Format::Markdown)]
@@ -24,4 +27,8 @@ pub enum Format {
     /// Org format
     #[value(alias = "o")]
     Org,
+}
+
+pub fn parse_url(arg: &str) -> miette::Result<Url> {
+    Url::parse(arg).into_diagnostic()
 }

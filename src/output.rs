@@ -1,5 +1,7 @@
 use std::io::{self, Write};
 
+use url::Url;
+
 use crate::{cli::Format, config::Config, fmt, web};
 
 pub struct Printer {
@@ -10,10 +12,10 @@ impl Printer {
     pub fn new(config: Config) -> Self {
         Self { config }
     }
-    pub async fn print(&self, url: &str) -> Result<(), crate::Error> {
+    pub async fn print(&self, url: &Url) -> Result<(), crate::Error> {
         self.link(url).await
     }
-    async fn link(&self, url: &str) -> Result<(), crate::Error> {
+    async fn link(&self, url: &Url) -> Result<(), crate::Error> {
         let title = web::title(url).await?;
         let link = match self.config.format {
             Format::Markdown => fmt::markdown(url, &title),

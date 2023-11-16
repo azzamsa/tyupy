@@ -1,15 +1,19 @@
+use url::Url;
+
 /// Generates a Markdown link with the provided URL and title.
 ///
 /// # Examples
 ///
 /// ```
-/// use tyupy::fmt::markdown;
-/// let url = "https://example.com";
+/// # use tyupy::fmt::markdown;
+/// # use url::Url;
+///
+/// let url = Url::parse("https://example.com").unwrap();
 /// let title = "Example Website";
-/// let markdown_link = markdown(url, title);
-/// assert_eq!(markdown_link, "[Example Website](https://example.com)");
+/// let link = markdown(&url, title);
+/// assert_eq!(link, "[Example Website](https://example.com/)");
 /// ```
-pub fn markdown(url: &str, title: &str) -> String {
+pub fn markdown(url: &Url, title: &str) -> String {
     format!("[{}]({})", title, url)
 }
 
@@ -18,12 +22,14 @@ pub fn markdown(url: &str, title: &str) -> String {
 /// # Examples
 ///
 /// ```
-/// use tyupy::fmt::org;
-/// let url = "https://example.com";
+/// # use tyupy::fmt::org;
+/// # use url::Url;
+///
+/// let url = Url::parse("https://example.com").unwrap();
 /// let description = "Example Website";
-/// let org_link = org(url, description);
-/// assert_eq!(org_link, "[[https://example.com][Example Website]]");
+/// let link = org(&url, description);
+/// assert_eq!(link, "[[https://example.com/][Example Website]]");
 /// ```
-pub fn org(url: &str, description: &str) -> String {
+pub fn org(url: &Url, description: &str) -> String {
     format!("[[{}][{}]]", url, description)
 }

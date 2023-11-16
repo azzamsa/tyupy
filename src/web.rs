@@ -1,9 +1,9 @@
 use reqwest::Client;
-use select::document::Document;
-use select::predicate::Name;
+use select::{document::Document, predicate::Name};
+use url::Url;
 
-pub async fn title(url: &str) -> Result<String, crate::Error> {
-    let response = Client::new().get(url).send().await?;
+pub async fn title(url: &Url) -> Result<String, crate::Error> {
+    let response = Client::new().get(url.to_string()).send().await?;
     let body = response.text().await?;
 
     let document = Document::from_read(body.as_bytes())?;
