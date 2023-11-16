@@ -21,7 +21,8 @@ impl Printer {
             Format::Markdown => fmt::markdown(url, &title),
             Format::Org => fmt::org(url, &title),
         };
-        stdout(&link);
+        // `writeln` doesn't work well with `stdin().lock()`
+        println!("{}", &link);
         Ok(())
     }
 }
