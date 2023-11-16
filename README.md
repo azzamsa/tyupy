@@ -5,8 +5,8 @@
 
 Turn URL to any format.
 
-<a href="https://github.com/azzamsa/tyupy/workflows/ci.yml">
-    <img src="https://github.com/azzamsa/tyupy/workflows/ci/badge.svg" alt="Build status" />
+<a href="https://github.com/azzamsa/tyupy/actions/workflows/ci.yml">
+    <img src="https://github.com/azzamsa/tyupy/actions/workflows/ci.yml/badge.svg" alt="Build status" />
   </a>
 
 <a href="https://crates.io/crates/tyupy">
