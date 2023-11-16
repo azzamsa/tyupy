@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.1] - 2023-11-16
+
+### Features
+
+- Use more strict type ([979bd72](https://github.com/azzamsa/tyupy/commit/979bd7253f25ab53debbddf9fb56ce4609b59c13))
+
 ## [0.1.0] - 2023-11-16
 
 ### Features
