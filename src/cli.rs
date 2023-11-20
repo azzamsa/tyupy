@@ -6,7 +6,7 @@ use url::Url;
 #[command(
     name = "tyupy",
     version,
-    about = "tyupy 🐿️. \nTransform URLs into any format",
+    about = "tyupy 🐿️. \nGet URL(s) title in any format.",
     after_long_help = "Bugs can be reported on GitHub: https://github.com/azzamsa/tyupy/issues"
 )]
 pub struct Opts {
@@ -17,6 +17,18 @@ pub struct Opts {
     /// Output format
     #[arg(short, long, value_enum, default_value_t = Format::Markdown)]
     pub format: Format,
+
+    /// Max length of the title.
+    ///
+    /// Typy cuts any title that exceeds the limit. Minimum possible value is 4.
+    #[arg(short, long)]
+    pub max_length: Option<usize>,
+
+    /// String to mark the end of truncated titles.
+    ///
+    /// Requires `max_length` to be enabled.
+    #[arg(short, long, requires = "max_length")]
+    pub ellipsis: Option<String>,
 }
 
 #[derive(Debug, Clone, ValueEnum)]

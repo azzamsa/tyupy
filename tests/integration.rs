@@ -9,7 +9,7 @@ fn help() -> Result<(), Box<dyn Error>> {
     cmd.arg("-h");
     cmd.assert()
         .success()
-        .stdout(predicate::str::contains("Transform URLs into any format"));
+        .stdout(predicate::str::contains("Get URL(s) title in any format."));
 
     Ok(())
 }

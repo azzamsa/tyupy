@@ -30,6 +30,8 @@ async fn run() -> miette::Result<ExitCode> {
     let opts = Opts::parse();
     let config = Config {
         format: opts.format,
+        max_length: opts.max_length,
+        ellipsis: opts.ellipsis,
     };
 
     let printer = output::Printer::new(config);

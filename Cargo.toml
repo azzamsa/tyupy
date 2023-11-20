@@ -9,7 +9,7 @@ keywords = ["cli", "formatter"]
 license = "MIT"
 repository = "https://github.com/azzamsa/tyupy"
 rust-version = "1.73.0"
-description = "Transform URLs into any format"
+description = "Get URL(s) title in any format"
 
 [profile.release]
 opt-level = 'z' # Optimize for size.

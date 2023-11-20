@@ -17,6 +17,16 @@ impl Printer {
     }
     async fn link(&self, url: &Url) -> Result<(), crate::Error> {
         let title = web::title(url).await?;
+
+        // Truncate the title if it exceeds the max_length
+        let title = match self.config.max_length {
+            Some(len) => match &self.config.ellipsis {
+                Some(ellipsis) => format!("{}{}", &title[..len], { ellipsis }),
+                None => format!("{}...", &title[..len]),
+            },
+            None => title.to_string(),
+        };
+
         let link = match self.config.format {
             Format::Markdown => fmt::markdown(url, &title),
             Format::Org => fmt::org(url, &title),

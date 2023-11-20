@@ -3,7 +3,7 @@
 
 <img src='docs/logo.svg' width=80px />
 
-Transform URLs into any format.
+Get URL(s) title in any format.
 
 <a href="https://github.com/azzamsa/tyupy/actions/workflows/ci.yml">
     <img src="https://github.com/azzamsa/tyupy/actions/workflows/ci.yml/badge.svg" alt="Build status" />
@@ -29,7 +29,9 @@ Transform URLs into any format.
 
 ## Features
 
-- Format given link(s) to any format*
+- Get URL(s) title in any format*.
+  - Markdown
+  - Org-mode
 - Fancy error message and colorful output.
 - Cross-platform and single binary.
 
@@ -40,10 +42,16 @@ Transform URLs into any format.
 ```bash
 🦄 tyupy --help
 
-🦄 tyupy https://github.com/azzamsa/tin/
+🦄 tyupy https://github.com/azzamsa/tin/ # Get URL title in markdown format (default).
 [GitHub - azzamsa/tin: Rust GraphQL Template 🏗](https://github.com/azzamsa/tin/)
 
-🦄 tyupy https://github.com/azzamsa/tin/ --format org # use `-f o` alias for less typing
+🦄 tyupy https://github.com/azzamsa/tin/ --max-length 16 # Limit title length
+[GitHub - azzamsa...](https://github.com/azzamsa/tin)
+
+🦄 tyupy https://github.com/azzamsa/tin/ --max-length 16 --ellipsis "***" # Use custom ellipsis
+[GitHub - azzamsa***](https://github.com/azzamsa/tin)
+
+🦄 tyupy https://github.com/azzamsa/tin/ --format org # Use `-f o` alias for less typing
 [[https://github.com/azzamsa/tin/][GitHub - azzamsa/tin: Rust GraphQL Template 🏗]]
 
 🦄 tyupy # reads from stdin
@@ -98,8 +106,9 @@ To learn more read [the development guide](docs/dev/README.md)
 
 ## Origin of the name
 
-The name tyupy is a played version of [Tupai](https://id.wikipedia.org/wiki/Tupai).
+The term "tyupy" is a playful variation inspired by [Tupai](https://id.wikipedia.org/wiki/Tupai), which translates to "Squirrel" in English. The choice is influenced by the URL-like sound associated with the word "Squirrel".
 
 ## Credits
 
+- [rexim's org-cliplink](https://github.com/rexim/org-cliplink)
 - [Noto Emoji](https://github.com/googlefonts/noto-emoji)
