@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2023-11-20
+
+### Features
+
+- Support maximum title length and ellipsis options ([4d255d3](https://github.com/azzamsa/tyupy/commit/4d255d38856be2e0e10e8a6d06eca307ab2be544))
+
 ## [1.0.0] - 2023-11-16
 
 ### Bug fixes

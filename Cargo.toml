@@ -1,6 +1,6 @@
 [package]
 name = "tyupy"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["azzamsa <vcs@azzamsa.com>"]
 categories = ["command-line-utilities"]
 edition = "2021"
