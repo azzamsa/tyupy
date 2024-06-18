@@ -8,7 +8,7 @@ exclude = ["/README.md"]
 keywords = ["cli", "formatter"]
 license = "MIT"
 repository = "https://github.com/azzamsa/tyupy"
-rust-version = "1.77.1"
+rust-version = "1.79.0"
 description = "Get URL(s) title in any format"
 
 [profile.release]
@@ -19,16 +19,16 @@ panic = 'abort'
 
 [dependencies]
 # cli
-clap = { version = "4.5.4", features = ["suggestions", "color", "cargo", "derive"] }
+clap = { version = "4.5.7", features = ["suggestions", "color", "cargo", "derive"] }
 
 # error
-miette = { version = "5.10", features = ["fancy"] }
+miette = { version = "7.2", features = ["fancy"] }
 thiserror = "1.0"
 
-reqwest = { version = "0.11", default-features = false, features = ["rustls-tls"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"] }
 select = "0.6.0"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
-url = "2.5.0"
+url = "2.5.1"
 
 [dev-dependencies]
 assert_cmd = "2.0.14"
