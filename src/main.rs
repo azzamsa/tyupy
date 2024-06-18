@@ -35,8 +35,8 @@ async fn run() -> miette::Result<ExitCode> {
     };
 
     let printer = output::Printer::new(config);
-    match opts.url.clone() {
-        Some(url) => printer.print(&url).await?,
+    match &opts.url {
+        Some(url) => printer.print(url).await?,
         None => {
             for line in io::stdin().lock().lines() {
                 let line = &line.unwrap_or("".to_string());
